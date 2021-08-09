@@ -1,3 +1,3 @@
-# Powershell_Projects
-PS Scripts
-MISC Powershell projects 
+# Projects
+PS Scripts, Azure ARM Templates
+
