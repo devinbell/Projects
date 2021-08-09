@@ -3,14 +3,14 @@ $rgname = 'mynetwork'
 New-AzResourceGroup -name $rgname -location "South Central US" -force
 
 #deploy the storage
-New-AzResourceGroupDeployment -name "New-storage1" -resourcegroupname $rgname -templatefile 'C:\github_vscode\projects\azure_ARM\storage.json'
+New-AzResourceGroupDeployment -name "newstorage1" -resourcegroupname $rgname -templatefile 'C:\github_vscode\projects\azure_ARM\storage.json'
 
 
 # SIG # Begin signature block
 # MIIF1gYJKoZIhvcNAQcCoIIFxzCCBcMCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUF9x0lIGTrxAlcTnoV10HconK
-# 6UigggNOMIIDSjCCAjKgAwIBAgIQePhWFiGdWL5GuhWXo9HWlzANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUoNhh0kyM4K7wQrUKNCiF5MO+
+# Gb+gggNOMIIDSjCCAjKgAwIBAgIQePhWFiGdWL5GuhWXo9HWlzANBgkqhkiG9w0B
 # AQsFADA9MRMwEQYDVQQDDApEZXZpbiBCZWxsMSYwJAYJKoZIhvcNAQkBFhdkZXZp
 # bmJlbGwyMDEzQHlhaG9vLmNvbTAeFw0yMTA3MjUxNDExNTlaFw0zMTAxMDEwNTAw
 # MDBaMD0xEzARBgNVBAMMCkRldmluIEJlbGwxJjAkBgkqhkiG9w0BCQEWF2Rldmlu
@@ -32,11 +32,11 @@ New-AzResourceGroupDeployment -name "New-storage1" -resourcegroupname $rgname -t
 # bGwyMDEzQHlhaG9vLmNvbQIQePhWFiGdWL5GuhWXo9HWlzAJBgUrDgMCGgUAoHgw
 # GAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGC
 # NwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAjBgkqhkiG9w0BCQQx
-# FgQU8TO46JntRd6UxOGwdBaLdcxZiTEwDQYJKoZIhvcNAQEBBQAEggEAErtK3Pjq
-# c3scfRg2hTAFd6eyZjDLVRbqhMqC3wfutu4PlcnWO5vo0sbE+OxY0rOW8mi+7nl1
-# SCHoU+56mM+HmhDcjjKs8lxI5J0HraY3JrO6uEt55LISNRrBuX6KTKFJwX58oRou
-# 47/b3yt1ax0zuX94KV43fAdm2Y+qQxmBFwGXuozLDqW7mVCj6kogW+ADgB5/KZDI
-# 9SBnowTsEfHpcBqL14GgaO2deWLmVxijANRlqMUswJ52ic+DSyIGrXcrcRyxkug4
-# wAHNnLEOXo1lXYdbnx7VIH+igiBNhsD3XSvSb1Vbo9rF4VIlw9yDHbQ53mjC9kSj
-# 12bW97Oyj2+hjQ==
+# FgQUs/D4CeRTdSv6p1YkXYkhRHgywK0wDQYJKoZIhvcNAQEBBQAEggEAqSqTWmp5
+# ZT7ux4vf8eYIHxFr5Bb/5UuuVfWuYh0wQq5oned2JoC4Mncs2VMUNGd9MptB0QRa
+# zqTZFukw4R3lHRuCOTTRdBnkB/dS4/pw3KfDN+L1aBULLW5e09uYYh7FHvVpQ8ii
+# ZdOIFrfrUvnxPRmPTHjdVZSlPRAiTdVcSgesVnO25L6sElT6S/Gm3xdwZkmiT+GK
+# SEOl/0c4J0l3+e63H1adDWk1gpkP1b7NwI3aJnww+nz+lYha5elrGZ9T0U4HauqP
+# uYKVx13lEA+l6ekKjwEx/BJo+uGvBLQZ7dAExjRsTPYbKpMc6nj4+4m4R4d+QWjH
+# RDMkVJRCvl9g6Q==
 # SIG # End signature block
