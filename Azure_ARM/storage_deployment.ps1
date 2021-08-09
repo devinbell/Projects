@@ -1,6 +1,6 @@
 #create resource group 
 $rgname = 'mynetwork'
-New-AzResourceGroup -name $rgname -location "Central US" -force
+New-AzResourceGroup -name $rgname -location "South Central US" -force
 
 #deploy the storage
 New-AzResourceGroupDeployment -name "New-storage1" -resourcegroupname $rgname -templatefile 'C:\github_vscode\projects\azure_ARM\storage.json'
@@ -9,8 +9,8 @@ New-AzResourceGroupDeployment -name "New-storage1" -resourcegroupname $rgname -t
 # SIG # Begin signature block
 # MIIF1gYJKoZIhvcNAQcCoIIFxzCCBcMCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQURyOCaYrMUAiuq3rKfE08jQMF
-# QJqgggNOMIIDSjCCAjKgAwIBAgIQePhWFiGdWL5GuhWXo9HWlzANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUF9x0lIGTrxAlcTnoV10HconK
+# 6UigggNOMIIDSjCCAjKgAwIBAgIQePhWFiGdWL5GuhWXo9HWlzANBgkqhkiG9w0B
 # AQsFADA9MRMwEQYDVQQDDApEZXZpbiBCZWxsMSYwJAYJKoZIhvcNAQkBFhdkZXZp
 # bmJlbGwyMDEzQHlhaG9vLmNvbTAeFw0yMTA3MjUxNDExNTlaFw0zMTAxMDEwNTAw
 # MDBaMD0xEzARBgNVBAMMCkRldmluIEJlbGwxJjAkBgkqhkiG9w0BCQEWF2Rldmlu
@@ -32,11 +32,11 @@ New-AzResourceGroupDeployment -name "New-storage1" -resourcegroupname $rgname -t
 # bGwyMDEzQHlhaG9vLmNvbQIQePhWFiGdWL5GuhWXo9HWlzAJBgUrDgMCGgUAoHgw
 # GAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGC
 # NwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAjBgkqhkiG9w0BCQQx
-# FgQUejMpVAiaFvL4iNa8q74F/FB4zxkwDQYJKoZIhvcNAQEBBQAEggEAVX8GGcA6
-# BXd8nVzBP1Bd6O2z5wp5UFOSOEmHEkRQj+BN1OvM7Jqzk3frmkhvUOYNRMJbIZ4e
-# q21MqIrtjxrd8PR3ypUliPRnxP0LJuE/malMFBX28nLGQ2qVEusNhH8UH8TMc55j
-# gTVldm1Gbew4az3YK0FbJecqdIdQqtY28pkar4UGd0ysiqIglSgxia8dUlApTeFD
-# TNgMas/+kL3culkoojCqpgr6duEtxSjsoFLYNq/dsm9Elx4VeJ34ZFodnRrz56O5
-# 2ajzggacqIGlYq1o6Re7B4Wti7L/cI596azp2bHSfOG4o7beJ3vL303jURlBz0sZ
-# x5lzVs01XPVXsA==
+# FgQU8TO46JntRd6UxOGwdBaLdcxZiTEwDQYJKoZIhvcNAQEBBQAEggEAErtK3Pjq
+# c3scfRg2hTAFd6eyZjDLVRbqhMqC3wfutu4PlcnWO5vo0sbE+OxY0rOW8mi+7nl1
+# SCHoU+56mM+HmhDcjjKs8lxI5J0HraY3JrO6uEt55LISNRrBuX6KTKFJwX58oRou
+# 47/b3yt1ax0zuX94KV43fAdm2Y+qQxmBFwGXuozLDqW7mVCj6kogW+ADgB5/KZDI
+# 9SBnowTsEfHpcBqL14GgaO2deWLmVxijANRlqMUswJ52ic+DSyIGrXcrcRyxkug4
+# wAHNnLEOXo1lXYdbnx7VIH+igiBNhsD3XSvSb1Vbo9rF4VIlw9yDHbQ53mjC9kSj
+# 12bW97Oyj2+hjQ==
 # SIG # End signature block
