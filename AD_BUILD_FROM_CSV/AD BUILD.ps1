@@ -18,7 +18,7 @@ Set-ADAccountPassword -Identity (((get-aduser -filter * -Properties *) | where n
 #ENABLE EACH ACCOUNT FOR USE
 Enable-ADAccount -Identity (((get-aduser -filter * -Properties *) | where name -eq $_.name) | select distinguishedname) }
 
-<#IF STATEMENT TO CREATE OU IF NOT ALREADY CREATED
+<#IF STATEMENT TO CREATE OU IF NOT ALREADY CREATED..
 OR MOVE ADUSER INTO THE OU ORGANIZED BY STATE#>
 
 $user=get-aduser -filter * -Properties state
@@ -40,7 +40,6 @@ $user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving"
                                            } 
                                       }
                                 }
-
 
                          
         
