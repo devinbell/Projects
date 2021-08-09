@@ -6,7 +6,7 @@ THEN CREATE DISTRO GROUP WITH EVERYONE IN EACH STATE#>
 $csvinfo = import-csv -LiteralPath "C:\users\myadmin\Desktop\smallfakeInfo.txt" | sort-Object -property username -Unique
 
 
-#FOREACH LOOP TO CREATE ADUSER FOR EACH ROW FROM CSV 
+#FOREACH LOOP TO CREATE ADUSER FOR EACH ROW FROM CSV...
 $csvinfo | foreach{ 
 New-ADUser -name $_.name -GivenName $_.givenname -Surname $_.surname -StreetAddress $_.streetaddress -City $_.city -State $_.statefull  `
 -EmailAddress $_.emailaddress -UserPrincipalName $_.username -MobilePhone $_.telephonenumber -Company $_.company -DisplayName $_.name  `
