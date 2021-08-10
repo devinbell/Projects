@@ -25,9 +25,11 @@ $user=get-aduser -filter * -Properties state
 
 #FOREACH TO CHECK IF EACH USER MATCHES AN OU AND IF SO MOVE IT IF NOT CREATE IT THEN MOVE IT
 $user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving" $_.Name" account into an OU"} 
-                                 else{if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
+                                 else{if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname `
+                                        -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
                                       else{New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LAN" -ProtectedFromAccidentalDeletion $false;
-                                           if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
+                                           if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname `
+                                              -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
                                            } 
                                       }
                                 }
