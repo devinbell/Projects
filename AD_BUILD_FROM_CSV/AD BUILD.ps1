@@ -2,7 +2,7 @@
 THEN MOVE USERS INTO OUs BY STATE, 
 THEN CREATE DISTRO GROUP WITH EVERYONE IN EACH STATE#>
 
-#IMPORT DATA                                                                      REMOVES ANY DUPLICATE ACCOUNTS
+#IMPORT DATA                                                                                         REMOVES ANY DUPLICATE ACCOUNTS
 $csvinfo = import-csv -LiteralPath "C:\github_vscode\Projects\AD_BUILD_FROM_CSV\smallfakeinfo.txt" | sort-Object -property username -Unique
 
 
@@ -40,28 +40,6 @@ $user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving"
                                            } 
                                       }
                                 }
-
-                         
-        
-
-<#        foreach{ if($oldOU.name -eq $_.state) }               
-            #IF ADUSER.STATE MATCHES AN OU MOVE THE ADUSER TO THAT OU                                 
-          {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname ; 
-           Write-Host "moved to " ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname }  
-                                              
-           #IF ADUSER.STATE DOESNT MATCH AN OU CREATE AN MOVE THE ADUSER TO IT
-         else{if($_.state -eq $null) {write-host "State is blank"} 
-              else{ if($_.state -eq $oldOU.name ) { Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname ;}
-                    else{
-                    New-ADOrganizationalUnit -name $_.state -Path 'DC=BELL,DC=LAN' -ProtectedFromAccidentalDeletion $false ;
-                    Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname ;  
-                    Write-Host "Created new OU and moved object to " ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname ;
-                   } 
-              }
-       }
-}
-
-#>
 
 #REMOVE ALL CREATED USERS TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
