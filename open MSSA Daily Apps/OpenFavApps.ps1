@@ -1,8 +1,9 @@
-﻿start-process https://linkedin.com/
-Start-Process https://alh.learnondemand.net/User/Login?ReturnUrl=%2f
-Start-Process https://www.clearancejobs.com/dashboard/your-profile
-Start-Process https://www.skillpipe.com/#/bookshelf/books
-Start-Process https://msftmssa-my.sharepoint.com/
+﻿start-process 'https://linkedin.com/'
+Start-Process 'https://github.com/devinbell/Projects'
+Start-Process 'https://alh.learnondemand.net/User/Login?ReturnUrl=%2f'
+Start-Process 'https://www.clearancejobs.com/dashboard/your-profile'
+Start-Process 'https://www.skillpipe.com/#/bookshelf/books'
+Start-Process 'https://msftmssa-my.sharepoint.com/'
 Start-Process -File "$($env:USERProfile)\AppData\Local\Microsoft\Teams\Update.exe" -ArgumentList '--processStart "Teams.exe"'
 invoke-item -Path "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
 
