@@ -2,8 +2,8 @@
 THEN MOVE USERS INTO OUs BY STATE, 
 THEN CREATE DISTRO GROUP WITH EVERYONE IN EACH STATE#>
 
-#IMPORT DATA                                                                                         REMOVES ANY DUPLICATE ACCOUNTS
-$csvinfo = import-csv -LiteralPath "C:\github_vscode\Projects\AD_BUILD_FROM_CSV\smallfakeinfo.txt" | sort-Object -property username -Unique
+#IMPORT DATA                                                                                  REMOVES ANY DUPLICATE ACCOUNTS
+$csvinfo = import-csv -LiteralPath "C:\github\Projects\AD_BUILD_FROM_CSV\smallfakeinfo.txt" | sort-Object -property username -Unique
 
 
 #FOREACH LOOP TO CREATE ADUSER FOR EACH ROW FROM CSV.
