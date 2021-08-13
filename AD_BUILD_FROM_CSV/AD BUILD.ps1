@@ -5,7 +5,6 @@ THEN CREATE DISTRO GROUP WITH EVERYONE IN EACH STATE#>
 #IMPORT DATA                                                                                  REMOVES ANY DUPLICATE ACCOUNTS
 $csvinfo = import-csv -LiteralPath "C:\github\Projects\AD_BUILD_FROM_CSV\smallfakeinfo.txt" | sort-Object -property username -Unique
 
-
 #FOREACH LOOP TO CREATE ADUSER FOR EACH ROW FROM CSV.
 $csvinfo | foreach{ 
 New-ADUser -name $_.name -GivenName $_.givenname -Surname $_.surname -StreetAddress $_.streetaddress -City $_.city -State $_.statefull  `
@@ -28,20 +27,20 @@ $user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving"
                                  else{if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
                                       else{New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LOCAL" -ProtectedFromAccidentalDeletion $false;
                                            if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
-                                           }
+                                          }
                                       }
                                 }
 #CREATE A DISTRO GROUP IN EACH OU AND ALL MEMBERS OF THE OU TO THE GROUP
 $user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving" $_.Name" account into a group1"} 
-                                 else{if((Get-ADGroup -filter * )| where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select distinguishedname } 
-                                      else{New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path (((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname) 
-                                           if(Get-ADgroup -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select distinguishedname } 
+                                 else{if((Get-ADGroup -filter * )| where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname } 
+                                      else{New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path (((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname) 
+                                           if(Get-ADgroup -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname } 
                                            else{write-host "Not Moving" $_.Name" account into a group2"}
                                            } 
                                       }
                                 }
 
-#REMOVE ALL CREATED USERS TO RETEST
+#REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
 Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit;
 
