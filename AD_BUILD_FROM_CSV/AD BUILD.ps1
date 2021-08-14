@@ -35,11 +35,10 @@ $user |
                          New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LOCAL" -ProtectedFromAccidentalDeletion $false;
 
                          if($ou) {
-                              Move-ADObject -Identity $_.distinguishedname -TargetPath $ou.distinguishedname #| 
-                             # select distinguishedname 
-                             } 
-                             }
-                    }
+                              Move-ADObject -Identity $_.distinguishedname -TargetPath $ou.distinguishedname 
+                                 } 
+                         }
+               }
      }
 #CREATE A DISTRO GROUP IN EACH OU AND ALL MEMBERS OF THE OU TO THE GROUP
 $user | 
