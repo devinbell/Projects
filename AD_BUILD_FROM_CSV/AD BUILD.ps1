@@ -23,22 +23,46 @@ OR MOVE ADUSER INTO THE OU ORGANIZED BY STATE#>
 $user=get-aduser -filter * -Properties state
 
 #FOREACH TO CHECK IF EACH USER MATCHES AN OU AND IF SO MOVE IT IF NOT CREATE IT THEN MOVE IT
-$user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving" $_.Name" account into an OU"} 
-                                 else{if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
-                                      else{New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LOCAL" -ProtectedFromAccidentalDeletion $false;
-                                           if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select distinguishedname } 
-                                          }
-                                      }
-                                }
+$user | 
+     ForEach-Object -process {
+          if($_.state -eq $null) {
+               Write-Host "Not Moving" $_.Name" account into an OU"
+          } else { 
+               if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {
+                    Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | 
+                         select distinguishedname 
+                    } else { 
+                         New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LOCAL" -ProtectedFromAccidentalDeletion $false;
+
+                         if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {
+                              Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | 
+                              select distinguishedname 
+                             } 
+                             }
+                    }
+     }
 #CREATE A DISTRO GROUP IN EACH OU AND ALL MEMBERS OF THE OU TO THE GROUP
-$user | ForEach-Object -process {if($_.state -eq $null) {Write-Host "Not Moving" $_.Name" account into a group1"} 
-                                 else{if((Get-ADGroup -filter * )| where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname } 
-                                      else{New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path (((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname) 
-                                           if(Get-ADgroup -filter * | where name -eq $_.state) {Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | select -ExpandProperty distinguishedname } 
-                                           else{write-host "Not Moving" $_.Name" account into a group2"}
-                                           } 
-                                      }
-                                }
+$user | 
+     ForEach-Object -process {
+          if($_.state -eq $null) {
+               Write-Host "Not Moving" $_.Name" account into a group1"
+          } else {
+               if((Get-ADGroup -filter * )| where name -eq $_.state) {
+                    Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
+                    select -ExpandProperty distinguishedname 
+               } else {
+                    New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path (((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) |
+                     select -ExpandProperty distinguishedname)
+                     
+                     if(Get-ADgroup -filter * | where name -eq $_.state) {
+                          Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
+                          select -ExpandProperty distinguishedname 
+                         } else { 
+                              write-host "Not Moving" $_.Name" account into a group2"
+                         }
+                    } 
+               }
+          }
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
