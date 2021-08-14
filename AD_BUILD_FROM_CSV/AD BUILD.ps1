@@ -28,15 +28,15 @@ $user |
           if($null -eq $_.state) {
                Write-Host "Not Moving" $_.Name" account into an OU"
           } else { 
-               if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {
-                    Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | 
-                         select distinguishedname 
+               $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
+               if($ou) {
+                    Move-ADObject -Identity $_.distinguishedname -TargetPath $ou.distinguishedname 
                     } else { 
                          New-ADOrganizationalUnit -name $_.state -Path "DC=BELL,DC=LOCAL" -ProtectedFromAccidentalDeletion $false;
 
-                         if(Get-ADOrganizationalUnit -filter * | where name -eq $_.state) {
-                              Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) | 
-                              select distinguishedname 
+                         if($ou) {
+                              Move-ADObject -Identity $_.distinguishedname -TargetPath $ou.distinguishedname #| 
+                             # select distinguishedname 
                              } 
                              }
                     }
