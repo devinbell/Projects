@@ -26,7 +26,7 @@ $user=get-aduser -filter * -Properties state
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Host "Not Moving" $_.Name" account into an OU"
+               Write-Information "Not Moving" $_.Name" account into an OU"
           } else { 
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($ou) {
@@ -44,7 +44,7 @@ $user |
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Host "Not Moving" $_.Name" account into a group1"
+               Write-Information "Not Moving" $_.Name" account into a group1"
           } else {
                if((Get-ADGroup -filter * )| where name -eq $_.state) {
                     Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
@@ -57,7 +57,7 @@ $user |
                           Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
                           select -ExpandProperty distinguishedname 
                          } else { 
-                              write-host "Not Moving" $_.Name" account into a group2"
+                              Write-Information "Not Moving" $_.Name" account into a group2"
                          }
                     } 
                }
