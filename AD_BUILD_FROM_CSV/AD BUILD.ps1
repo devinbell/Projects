@@ -44,18 +44,18 @@ $user |
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Host "Not Moving" $_.Name" account into a group1"
+               Write-Host "Not Moving" $_.Name" account into a group"
           } else {
-               $group = ((Get-ADGroup -filter * )| where name -eq $_.state)
+               $group = Get-ADGroup -filter * | where name -eq $_.state
+               $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($group) {
-                    Move-ADObject -Identity $_.distinguishedname -TargetPath $group | select -ExpandProperty distinguishedname 
+                    add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                } else {
-                    New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path $group -ExpandProperty distinguishedname
-                     
+                    New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path $ou.DistinguishedName
                      if($group) {
-                         Move-ADObject -Identity $_.distinguishedname -TargetPath $group | select -ExpandProperty distinguishedname 
+                         add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                          } else { 
-                              Write-Host "Not Moving" $_.Name" account into a group2"
+                              Write-Host "Not Moving" $_.Name" account into a group"
                          }
                     } 
                }
@@ -64,5 +64,6 @@ $user |
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
 Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit;
-Get-ADGroup -Filter * | where -Property name -like 'ala'
+
+
 
