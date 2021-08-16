@@ -26,7 +26,7 @@ $user=get-aduser -filter * -Properties state
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Information "Not Moving" $_.Name" account into an OU"
+               Write-Host "Not Moving" $_.Name" account into an OU"
           } else { 
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($ou) {
@@ -44,20 +44,18 @@ $user |
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Information "Not Moving" $_.Name" account into a group1"
+               Write-Host "Not Moving" $_.Name" account into a group1"
           } else {
-               if((Get-ADGroup -filter * )| where name -eq $_.state) {
-                    Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
-                    select -ExpandProperty distinguishedname 
+               $group = ((Get-ADGroup -filter * )| where name -eq $_.state)
+               if($group) {
+                    Move-ADObject -Identity $_.distinguishedname -TargetPath $group | select -ExpandProperty distinguishedname 
                } else {
-                    New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path (((Get-ADOrganizationalUnit -filter *) | where name -eq $_.state) |
-                     select -ExpandProperty distinguishedname)
+                    New-ADgroup -name $_.state -GroupScope Global -GroupCategory Distribution -Path $group -ExpandProperty distinguishedname
                      
-                     if(Get-ADgroup -filter * | where name -eq $_.state) {
-                          Move-ADObject -Identity $_.distinguishedname -TargetPath ((Get-ADgroup -filter *) | where name -eq $_.state) | 
-                          select -ExpandProperty distinguishedname 
+                     if($group) {
+                         Move-ADObject -Identity $_.distinguishedname -TargetPath $group | select -ExpandProperty distinguishedname 
                          } else { 
-                              Write-Information "Not Moving" $_.Name" account into a group2"
+                              Write-Host "Not Moving" $_.Name" account into a group2"
                          }
                     } 
                }
@@ -66,4 +64,5 @@ $user |
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
 Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit;
+Get-ADGroup -Filter * | where -Property name -like 'ala'
 
