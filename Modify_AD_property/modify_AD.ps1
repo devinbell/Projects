@@ -8,10 +8,10 @@ directory
  $username = Read-Host
  $user = Get-ADUser -filter * -Properties* | where -Property UserPrincipalName -like $username
 
- if($user)
- {
+ if($user){
    write-host "$_.name is a valid option"
  }
+ 
 else{
    Write-Host "invalid option, choose again"
 }
