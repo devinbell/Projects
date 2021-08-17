@@ -5,9 +5,9 @@ directory
 
  #get name of user changing
  Write-Host "What is the username of the user you want to modify?"
- if((get-aduser -filter * | where -Property Name -eq (Read-Host)))
+ $username = Read-Host
+ if((get-aduser -filter * | where -Property UserPrincipalName -like $username))
  {
-    $username = Read-Host
+   write-host $username
  }
  
- write-host $username
