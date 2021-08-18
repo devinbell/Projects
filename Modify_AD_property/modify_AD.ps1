@@ -6,16 +6,16 @@ directory
  #get name of user changing
  Write-Host "What is the username of the user you want to modify?"
  $username = Read-Host
+
+ #parameter for user that matches input 
  $user = Get-ADUser -filter * -Properties * | where -Property UserPrincipalName -like $username
+ 
+ #get new information
  Write-Host "What is the new last name?"
  $last = Read-Host 
+ do {
+  Set-ADUser -Identity $user @{name='LastName';expression={$last}}
+  Write-Information 'Last name updated successfully.'
+ } while ($user)
 
- if($user){
-   Set-ADUser -Identity $user @{name='LastName';expression={$last}}
-   Write-Information -MessageData 'Last name updated successfully.'
- }
-
-else{
-   Write-Host "invalid option, choose again"
-}
 
