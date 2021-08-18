@@ -12,6 +12,7 @@ directory
 
  if($user){
    Set-ADUser -Identity $user @{name='LastName';expression={$last}}
+   Write-Information -MessageData 'Last name updated successfully.'
  }
 
 else{
