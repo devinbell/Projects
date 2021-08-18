@@ -4,7 +4,7 @@ directory
  #>
 do {
     #get name of user changing
-     Write-Host "What is the username of the user you want to modify?"
+     Write-Information -MessageData "What is the username of the user you want to modify?" -InformationAction Continue
      $username = Read-Host
 
      #parameter for user that matches input 
@@ -13,18 +13,14 @@ do {
      #keep repeating until correct username is given
 } while ($null -eq $user)
  
- 
- #update user AD profile
+#update user AD profile
  if($user){
       #get new information
-     Write-Host "What is the new last name?"
+      Write-Information -MessageData  "What is the new last name?" -InformationAction Continue
      $last = Read-Host 
      $FirstName = $user.GivenName
      
-     Set-ADUser -Identity $user.distinguishedname -Surname $last -displayName "$FirstName $last" -
+     Set-ADUser -Identity $user.distinguishedname -Surname $last -displayName "$FirstName $last" 
      
-     Write-Information 'Last name updated successfully.'
+     Write-Information -MessageData 'Last name updated successfully.' -InformationAction Continue
  }
-
-
-
