@@ -13,9 +13,11 @@ directory
  #get new information
  Write-Host "What is the new last name?"
  $last = Read-Host 
- do {
-  Set-ADUser -Identity $user.distinguishedname -Surname $last  #error here <<-
-  Write-Information 'Last name updated successfully.'
- } while ($user)
+ if($user){
+     $FirstName = $user.GivenName
+    Set-ADUser -Identity $user.distinguishedname -Surname $last -displayName "$FirstName $last"
+    Write-Information 'Last name updated successfully.'
+ }
+
 
 
