@@ -15,12 +15,14 @@ do {
  
 #update user AD profile
  if($user){
+
       #get new information
       Write-Information -MessageData  "What is the new last name?" -InformationAction Continue
      $last = Read-Host 
      $FirstName = $user.GivenName
-     
+
+     #update AD-user
      Set-ADUser -Identity $user.distinguishedname -Surname $last -displayName "$FirstName $last" 
-     
+     #inform user action complete
      Write-Information -MessageData 'Last name updated successfully.' -InformationAction Continue
  }
