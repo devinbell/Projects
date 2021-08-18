@@ -14,7 +14,7 @@ directory
  Write-Host "What is the new last name?"
  $last = Read-Host 
  do {
-  Set-ADUser -Identity ($user | select -property distinguishedname) @{name='LastName';expression={$last}}  #error here <<-
+  Set-ADUser -Identity $user.distinguishedname -Surname $last  #error here <<-
   Write-Information 'Last name updated successfully.'
  } while ($user)
 
