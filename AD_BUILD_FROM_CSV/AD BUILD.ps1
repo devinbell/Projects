@@ -11,11 +11,16 @@ New-ADUser -name $_.name -GivenName $_.givenname -Surname $_.surname -StreetAddr
 -EmailAddress $_.emailaddress -UserPrincipalName $_.username -MobilePhone $_.telephonenumber -Company $_.company -DisplayName $_.name  `
  -PostalCode $_.zipcode -SamAccountName $_.username -OtherAttributes @{'title' = $_.occupation; 'carLicense' = $_.vehicle ; 'Middlename' = $_.middleinitial}
 
+ $userDname = ((get-aduser -filter * -Properties *) | Where name -eq $_.name) | select distinguishedname
+ #UPDATE ACCOUNT EMAIL TO DOMAIN
+# Set-ADUser -Identity $userDname -EmailAddress "$_.givenname $_.middlename @bell.local"
+
 #SET ACCOUNT PASSWORD FOR EACH USER
-Set-ADAccountPassword -Identity (((get-aduser -filter * -Properties *) | Where name -eq $_.name) | select distinguishedname) -OldPassword $null -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $_.password -force) 
+Set-ADAccountPassword -Identity $userDname -OldPassword $null -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $_.password -force) 
 
 #ENABLE EACH ACCOUNT FOR USE
-Enable-ADAccount -Identity (((get-aduser -filter * -Properties *) | Where name -eq $_.name) | select distinguishedname) }
+Enable-ADAccount -Identity $userDname 
+}
 
 <#IF STATEMENT TO CREATE OU IF NOT ALREADY CREATED..
 OR MOVE ADUSER INTO THE OU ORGANIZED BY STATE#>
@@ -26,7 +31,7 @@ $user=get-aduser -filter * -Properties state
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Host "Not Moving" $_.Name" account into an OU"
+               Write-information -MessageData "Not Moving" $_.Name" account into an OU" -InformationAction Continue
           } else { 
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($ou) {
@@ -44,7 +49,7 @@ $user |
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-Host "Not Moving" $_.Name" account into a group"
+               Write-information -MessageData "Not Moving" $_.Name" account into a group" -InformationAction Continue
           } else {
                $group = Get-ADGroup -filter * | where name -eq $_.state
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
@@ -55,7 +60,7 @@ $user |
                      if($group) {
                          add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                          } else { 
-                              Write-Host "Not Moving" $_.Name" account into a group"
+                              Write-information -MessageData "Not Moving" $_.Name" account into a group" -InformationAction Continue
                          }
                     } 
                }
