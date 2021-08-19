@@ -23,6 +23,7 @@ do {
 
      #update AD-user
      Set-ADUser -Identity $user.distinguishedname -Surname $last -displayName "$FirstName $last" 
+     Rename-ADObject -Identity $user.DistinguishedName -NewName "$FirstName $last" 
      #inform user action complete
      Write-Information -MessageData 'Last name updated successfully.' -InformationAction Continue
  }
