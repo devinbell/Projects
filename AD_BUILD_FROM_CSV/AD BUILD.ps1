@@ -49,7 +49,7 @@ $user |
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-information -MessageData "Not Moving" $_.Name" account into a group" -InformationAction Continue
+               Write-information -MessageData "Not Moving $_.Name account into a group" -InformationAction Continue
           } else {
                $group = Get-ADGroup -filter * | where name -eq $_.state
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
@@ -60,7 +60,7 @@ $user |
                      if($group) {
                          add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                          } else { 
-                              Write-information -MessageData "Not Moving" $_.Name" account into a group" -InformationAction Continue
+                              Write-information -MessageData "Not Moving ($_.Name) account into a group" -InformationAction Continue
                          }
                     } 
                }
