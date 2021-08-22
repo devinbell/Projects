@@ -69,6 +69,7 @@ $user |
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
 Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit;
+Get-ADGroup -filter * | where -Property name -eq 'alabama' | Remove-ADGroup
 
 
 
