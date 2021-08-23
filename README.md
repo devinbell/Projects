@@ -1,3 +1,3 @@
 # Projects
-PS Scripts, Azure ARM Templates
+PS project Scripts, Azure ARM Templates
 
