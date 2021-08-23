@@ -65,6 +65,9 @@ $user |
                     } 
                }
           }
+#count AD users
+$user.count 
+
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
