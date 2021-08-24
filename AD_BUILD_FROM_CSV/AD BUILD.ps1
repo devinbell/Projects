@@ -30,12 +30,15 @@ $user=get-aduser -filter * -Properties state
 #FOREACH TO CHECK IF EACH USER MATCHES AN OU AND IF SO MOVE IT IF NOT CREATE IT THEN MOVE IT
 $user | 
      ForEach-Object -process {
+          #parameters
+          $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
+          $nullstatement = Write-information -MessageData "Not Moving $adName account" -InformationAction Continue
+          $adname = $_.Name
+          $group = Get-ADGroup -filter * | where name -eq $_.state
+
           if($null -eq $_.state) {
-               $adname = $_.Name
-               $nullstatement = Write-information -MessageData "Not Moving $adName account into an OU" -InformationAction Continue
                $nullstatement
           } else { 
-               $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($ou) {
                     Move-ADObject -Identity $_.distinguishedname -TargetPath $ou.distinguishedname 
                     } else { 
@@ -46,15 +49,12 @@ $user |
                                  } 
                          }
                }
-     }
+     
 #CREATE A DISTRO GROUP IN EACH OU AND ALL MEMBERS OF THE OU TO THE GROUP
-$user | 
-     ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-information -MessageData "Not Moving $_.Name account into a group" -InformationAction Continue
+               $nullstatement
           } else {
-               $group = Get-ADGroup -filter * | where name -eq $_.state
-               $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
+               
                if($group) {
                     add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                } else {
@@ -62,20 +62,22 @@ $user |
                      if($group) {
                          add-adgroupmember -Members $_ -Identity $group.distinguishedname 
                          } else { 
-                              Write-information -MessageData "Not Moving ($_.Name) account into a group" -InformationAction Continue
+                              $nullstatement
                          }
                     } 
                }
           }
+
 #count AD users
 $count = $user.Count
 write-information -messagedata "there are $count users in active directory." -InformationAction Continue
 
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
-get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser;
-Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit;
+get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser
 Get-ADGroup -filter * | where -Property name -eq 'alabama' | Remove-ADGroup
+Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit
+
 
 
 
