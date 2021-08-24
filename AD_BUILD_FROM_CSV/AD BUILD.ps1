@@ -31,7 +31,9 @@ $user=get-aduser -filter * -Properties state
 $user | 
      ForEach-Object -process {
           if($null -eq $_.state) {
-               Write-information -MessageData "Not Moving" $_.Name" account into an OU" -InformationAction Continue
+               $adname = $_.Name
+               $nullstatement = Write-information -MessageData "Not Moving $adName account into an OU" -InformationAction Continue
+               $nullstatement
           } else { 
                $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
                if($ou) {
@@ -66,7 +68,8 @@ $user |
                }
           }
 #count AD users
-$user.count 
+$count = $user.Count
+write-information -messagedata "there are $count users in active directory." -InformationAction Continue
 
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
