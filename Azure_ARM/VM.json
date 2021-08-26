@@ -5,7 +5,7 @@
     "functions": [],
     "variables": {},
     "resources": [
-        {
+        {   //storage account
             "name": "[toLower('windowsVM1storage')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
@@ -18,7 +18,7 @@
             },
             "kind": "Storage"
         },
-        {
+        {   //ip address
             "name": "windowsVM1-PublicIP",
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-11-01",
@@ -33,7 +33,7 @@
                 }
             }
         },
-        {
+        {    //network security group
             "name": "windowsVM1-nsg",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2018-08-01",
@@ -57,7 +57,7 @@
                 ]
             }
         },
-        {
+        {  //network
             "name": "windowsVM1-VirtualNetwork",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-11-01",
@@ -78,7 +78,7 @@
                     {
                         "name": "windowsVM1-VirtualNetwork-Subnet",
                         "properties": {
-                            "addressPrefix": "10.0.0.0/24",
+                            "addressPrefix": "10.0.0.0/16",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'windowsVM1-nsg')]"
                             }
@@ -87,7 +87,7 @@
                 ]
             }
         },
-        {
+        {    //nic
             "name": "windowsVM1-NetworkInterface",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-11-01",
@@ -116,7 +116,7 @@
                 ]
             }
         },
-        {
+        {    //vm
             "name": "windowsVM1",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
