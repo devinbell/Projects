@@ -12,8 +12,6 @@ New-ADUser -name $_.name -GivenName $_.givenname -Surname $_.surname -StreetAddr
  -PostalCode $_.zipcode -SamAccountName $_.username -OtherAttributes @{'title' = $_.occupation; 'carLicense' = $_.vehicle ; 'Middlename' = $_.middleinitial}
 
  $userDname = ((get-aduser -filter * -Properties *) | Where name -eq $_.name) | select distinguishedname
- #UPDATE ACCOUNT EMAIL TO DOMAIN
-# Set-ADUser -Identity $userDname -EmailAddress "$_.givenname $_.middlename @bell.local"
 
 #SET ACCOUNT PASSWORD FOR EACH USER
 Set-ADAccountPassword -Identity $userDname -OldPassword $null -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $_.password -force) 
