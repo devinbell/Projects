@@ -70,12 +70,7 @@ $user |
 $count = $user.Count
 write-information -messagedata "there are $count users in active directory." -InformationAction Continue
 
-
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser
 Get-ADGroup -filter * | where -Property name -eq 'alabama' | Remove-ADGroup
 Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit
-
-
-
-
