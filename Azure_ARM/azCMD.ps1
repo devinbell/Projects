@@ -8,3 +8,8 @@ Start-AzVmss -VMScaleSetName -ResourceGroupName
 
 #returns all VMs in the resource group
 Get-AzVM -ResourceGroupName
+
+#new AZVMSS    MANDO parameters
+new-azvmss -ResourceGroupName -VMScaleSetName
+new-azvm -ResourceGroupName -Name
+
