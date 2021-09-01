@@ -13,6 +13,8 @@ start-azvm -Name -ResourceGroupName
 
 #returns all VMs in the resource group
 Get-AzVM -ResourceGroupName -name
+get-azvmss -ResourceGroupName -VMScaleSetName
+
 
 
 
