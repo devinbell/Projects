@@ -15,6 +15,7 @@ start-azvm -Name -ResourceGroupName
 Get-AzVM -ResourceGroupName -name
 get-azvmss -ResourceGroupName -VMScaleSetName
 
-
+#new storage account   
+New-AzStorageAccount -Name -SkuName -ResourceGroupName
 
 
