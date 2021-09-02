@@ -1,4 +1,4 @@
-#this file will be used for practicing basic azure CL
+#this file will be used for practicing basic azure CL with mandotory parameters
 
 #connect account will open broswer to log into azure account 
 Connect-AzAccount 
@@ -18,4 +18,6 @@ get-azvmss -ResourceGroupName -VMScaleSetName
 #new storage account   
 New-AzStorageAccount -Name -SkuName -ResourceGroupName
 
+#new nsg for the virtual network  
+New-AzNetworkSecurityGroup -Name -ResourceGroupName -Location
 
