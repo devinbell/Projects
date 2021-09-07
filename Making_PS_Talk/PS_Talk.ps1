@@ -13,9 +13,9 @@ $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer
 $speak.Rate=2
 
 #change voice to female voice
-
+$speak.SelectVoice('Microsoft Zira Desktop')
 
 
 
 #test
-$speak.speak{"Hello, World"}
+$speak.speak{"Hello World"}
