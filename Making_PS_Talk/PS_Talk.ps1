@@ -9,10 +9,13 @@ Add-Type -AssemblyName System.speech
 #create a new object speech synthesiser 
 $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer 
 
-#test
-$speak.speak{"Hello, World"}
-
 #change voice rate
 $speak.Rate=2
 
 #change voice to female voice
+
+
+
+
+#test
+$speak.speak{"Hello, World"}
