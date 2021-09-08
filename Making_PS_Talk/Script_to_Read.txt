@@ -1,2 +1,1 @@
-Hello World! My Name is Devin and I have managed to make
-powershell talk. 
+Hello World! My Name is Devin and I have managed to make powershell talk.

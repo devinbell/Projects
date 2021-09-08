@@ -15,7 +15,8 @@ $speak.Rate=2
 #change voice to female voice
 $speak.SelectVoice('Microsoft Zira Desktop')
 
-
+#creates variable with script
+$script = [pscustomobject] ((Get-Content -Raw C:\github_vscode\Projects\Making_PS_Talk\Script_to_read.txt))
 
 #test
-$speak.speak{"Hello World"}
+$speak.speak($script)
