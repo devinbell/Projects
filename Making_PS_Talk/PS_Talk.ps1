@@ -18,5 +18,5 @@ $speak.SelectVoice('Microsoft Zira Desktop')
 #creates variable with script
 $script = [pscustomobject] ((Get-Content -Raw C:\github_vscode\Projects\Making_PS_Talk\Script_to_read.txt))
 
-#talk 
+#calls the speak function and pass the script as a variable
 $speak.speak($script)
