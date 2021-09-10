@@ -21,3 +21,5 @@ New-AzStorageAccount -Name -SkuName -ResourceGroupName
 #new nsg for the virtual network  
 New-AzNetworkSecurityGroup -Name -ResourceGroupName -Location
 
+#azure cli 
+az.cmd
