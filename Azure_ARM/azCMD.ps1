@@ -23,3 +23,5 @@ New-AzNetworkSecurityGroup -Name -ResourceGroupName -Location
 
 #azure cli 
 az.cmd
+
+azAD
