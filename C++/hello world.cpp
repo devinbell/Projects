@@ -5,7 +5,10 @@ using namespace std;
 
 //main method
 int main(){
-    cout << "Hello World";
 
+    for(int i=0; i<=3; i++){
+        cout << i <<" Hello World" << endl ;
+    }
+   
     return 0;
 }
