@@ -1,7 +1,14 @@
 //this will be a basic code that writes hello world on the console
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
+
+//method to calculate the square
+void square(int base){
+    
+    cout<< "you entered " << base << "and that number squared is " << pow(base, 2); 
+}
 
 //main method
 int main(){
@@ -10,6 +17,9 @@ int main(){
     for(int i=0; i<=3; i++){
         cout << i <<" Hello World" << endl ;
     }
+
+    //test square method
+    square(12);
    
     return 0;
 }
