@@ -1,13 +1,13 @@
 //this will be a basic code that writes hello world on the console
 #include <iostream>
-#include <iomanip>
+#include <cmath>
 
 using namespace std;
 
 //method to calculate the square
 void square(int base){
-    
-    cout<< "you entered " << base << "and that number squared is " << pow(base, 2); 
+
+    cout<< "you entered " << base << " and that number squared is " << pow(base, 2); 
 }
 
 //main method
