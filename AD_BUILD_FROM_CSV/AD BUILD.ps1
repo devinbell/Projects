@@ -66,9 +66,15 @@ $user |
                }
           }
 
-#count AD users
-$count = $user.Count
-write-information -messagedata "there are $count users in active directory." -InformationAction Continue
+#count AD users ....make count into a function
+function Count-ADusers {
+     param (
+          [int]$count=$user.count
+     )
+     write-information -messagedata "there are $count users in active directory." -InformationAction Continue
+}
+
+
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
 get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser
