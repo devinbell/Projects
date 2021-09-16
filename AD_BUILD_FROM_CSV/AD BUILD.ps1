@@ -24,6 +24,16 @@ Enable-ADAccount -Identity $userDname
 OR MOVE ADUSER INTO THE OU ORGANIZED BY STATE#>
 
 $user=get-aduser -filter * -Properties state
+#count AD users ....make count into a function
+function Count-ADusers {
+     param (
+          [int]$count=$user.count
+     )
+     write-information -messagedata "there are $count users in active directory." -InformationAction Continue
+}
+
+#call the function
+Count-ADusers
 
 #FOREACH TO CHECK IF EACH USER MATCHES AN OU AND IF SO MOVE IT IF NOT CREATE IT THEN MOVE IT
 $user | 
@@ -66,13 +76,7 @@ $user |
                }
           }
 
-#count AD users ....make count into a function
-function Count-ADusers {
-     param (
-          [int]$count=$user.count
-     )
-     write-information -messagedata "there are $count users in active directory." -InformationAction Continue
-}
+
 
 
 
