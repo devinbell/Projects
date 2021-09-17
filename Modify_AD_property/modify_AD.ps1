@@ -1,6 +1,8 @@
 <# 
 This script will update a user's properties in active
 directory 
+
+do-while loop to get the information from the user and modifying ADuser
  #>
 do {
     #get name of user changing
