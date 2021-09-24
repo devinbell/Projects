@@ -6,12 +6,12 @@ THEN CREATE DISTRO GROUP WITH EVERYONE IN EACH STATE#>
 $csvinfo = import-csv -LiteralPath "C:\github\Projects\AD_BUILD_FROM_CSV\medfakeinfo.txt" | sort-Object -property username -Unique
 
 #FOREACH LOOP TO CREATE ADUSER FOR EACH ROW FROM CSV.
-$csvinfo | foreach{ 
+$csvinfo | ForEach-Object{ 
 New-ADUser -name $_.name -GivenName $_.givenname -Surname $_.surname -StreetAddress $_.streetaddress -City $_.city -State $_.statefull  `
 -EmailAddress $_.emailaddress -UserPrincipalName $_.username -MobilePhone $_.telephonenumber -Company $_.company -DisplayName $_.name  `
  -PostalCode $_.zipcode -SamAccountName $_.username -OtherAttributes @{'title' = $_.occupation; 'carLicense' = $_.vehicle ; 'Middlename' = $_.middleinitial}
 
- $userDname = ((get-aduser -filter * -Properties *) | Where name -eq $_.name) | select distinguishedname
+ $userDname = ((get-aduser -filter * -Properties *) | Where-Object name -eq $_.name) | Select-Object distinguishedname
 
 #SET ACCOUNT PASSWORD FOR EACH USER
 Set-ADAccountPassword -Identity $userDname -OldPassword $null -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $_.password -force) 
@@ -39,10 +39,10 @@ Count-ADusers
 $user | 
      ForEach-Object -process {
           #parameters
-          $ou = Get-ADOrganizationalUnit -filter * | where name -eq $_.state
+          $ou = Get-ADOrganizationalUnit -filter * | Where-Object name -eq $_.state
           $nullstatement = Write-information -MessageData "Not Moving $adName account" -InformationAction Continue
           $adname = $_.Name
-          $group = Get-ADGroup -filter * | where name -eq $_.state
+          $group = Get-ADGroup -filter * | Where-Object name -eq $_.state
 
           if($null -eq $_.state) {
                $nullstatement
@@ -81,6 +81,6 @@ $user |
 
 
 #REMOVE ALL CREATED USERS AND OUs TO RETEST
-get-aduser -Properties * -filter * | where -Property state -ne $null | remove-aduser
-Get-ADGroup -filter * | where -Property name -eq 'alabama' | Remove-ADGroup
-Get-ADOrganizationalUnit -filter * | where -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit
+get-aduser -Properties * -filter * | Where-Object -Property state -ne $null | remove-aduser
+Get-ADGroup -filter * | Where-Object -Property name -eq 'alabama' | Remove-ADGroup
+Get-ADOrganizationalUnit -filter * | Where-Object -Property name -ne "Domain Controllers" | Remove-ADOrganizationalUnit

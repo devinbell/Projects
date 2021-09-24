@@ -18,7 +18,7 @@ do {
 #update user AD profile
  if($user){
 
-      #get new information
+    #get new information
       Write-Information -MessageData  "What is the new last name?" -InformationAction Continue
      $last = Read-Host 
      $FirstName = $user.GivenName
