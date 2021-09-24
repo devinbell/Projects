@@ -10,7 +10,7 @@ do {
      $username = Read-Host
 
      #parameter for user that matches input 
-     $user = Get-ADUser -filter * -Properties * | where -Property UserPrincipalName -like $username
+     $user = Get-ADUser -filter * -Properties * | Where-Object -Property UserPrincipalName -like $username
 
      #keep repeating until correct username is given
 } while ($null -eq $user)
