@@ -74,6 +74,7 @@
                         "10.1.0.0/16"
                     ]
                 },
+                //subnet
                 "subnets": [
                     {
                         "name": "windowsVM1-VirtualNetwork-Subnet",
