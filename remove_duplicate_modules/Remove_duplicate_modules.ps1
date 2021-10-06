@@ -18,11 +18,11 @@ foreach ($Module in $modules)
   foreach ($mods in $specificmods)
   {
      if ($mods.version -eq $latest.version) { 
-        Write-Information -MessageData "You got the Latest version" -InformationAction Continue
+        Write-Host "You got the Latest version" -ForegroundColor Green
       }
-
+#uninstall all except the newest version
 	 else {
-        Write-Information -MessageData "Uninstalling the old version" -InformationAction Continue
+        Write-Host "Uninstalling the old version" -ForegroundColor Red
         Uninstall-Module -Name $mods.Name -RequiredVersion $mods.Version
       }
   }
