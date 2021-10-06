@@ -1,32 +1,33 @@
-write-host "this will report all modules with duplicate (older and newer) versions installed"
-write-host "be sure to run this as an admin" -foregroundcolor yellow
-write-host "(You can update all your Azure RMmodules with update-module Azurerm -force)"
+<#
+This script will compare module version numbers and uninstall
+the old version of the modules.
+#>
 
-$mods = get-installedmodule
 
-foreach ($Mod in $mods)
+$modules = get-installedmodule
+
+foreach ($Module in $modules)
 {
-  write-host "Checking $($mod.name)"
-  $latest = get-installedmodule $mod.name
-  $specificmods = get-installedmodule $mod.name -allversions
-  write-host "$($specificmods.count) versions of this module found [ $($mod.name) ]"
+  $latest = get-installedmodule $Module.name
+  $specificmods = get-installedmodule $Module.name -allversions
   
- 
-  foreach ($sm in $specificmods)
+  # $(variable) returns the count method 
+  write-information -MessageData "$($specificmods.count) versions of $($Module.name) module found " -InformationAction Continue
+  
+ #compare each version of the module
+  foreach ($mods in $specificmods)
   {
-     if ($sm.version -eq $latest.version) 
-	 { $color = "green"}
+     if ($mods.version -eq $latest.version) { 
+        Write-Information -MessageData "You got the Latest version" -InformationAction Continue
+      }
 
-	 else
-	 { $color = "magenta"
-       Uninstall-Module -Name $sm.Name -RequiredVersion $sm.Version
-    }
-     write-host " $($sm.name) - $($sm.version) [highest installed is $($latest.version)]" -foregroundcolor $color
-	
+	 else {
+        Write-Information -MessageData "Uninstalling the old version" -InformationAction Continue
+        Uninstall-Module -Name $mods.Name -RequiredVersion $mods.Version
+      }
   }
-  write-host "------------------------"
 }
-write-host "done"
+
 # SIG # Begin signature block
 # MIIF1gYJKoZIhvcNAQcCoIIFxzCCBcMCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
