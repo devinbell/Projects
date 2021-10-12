@@ -23,6 +23,6 @@ ForEach($event in $eventlog){
     }
 
 }
-
+#creates pop up box to display number of warning and location of log
 $Box = new-object -ComObject wscript.shell
 $output = $box.popup("there were $count warnings. Check the log in C:\temp")
