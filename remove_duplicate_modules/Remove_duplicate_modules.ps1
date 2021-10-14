@@ -1,6 +1,6 @@
 <#
 This script will compare module version numbers and uninstall
-the old version of the modules.
+the old versions of the modules.
 #>
 $modules = get-installedmodule
 
