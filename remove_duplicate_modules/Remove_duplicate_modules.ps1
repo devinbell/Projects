@@ -9,7 +9,7 @@ foreach ($Module in $modules)
   $latest = get-installedmodule $Module.name
   $specificmods = get-installedmodule $Module.name -allversions
   
-  # $(variable) returns the count method 
+  # $(variable.property) returns the count method 
   write-information -MessageData "$($specificmods.count) versions of $($Module.name) module found " -InformationAction Continue
   
  #compare each version of the module
